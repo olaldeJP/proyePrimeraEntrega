@@ -1,0 +1,129 @@
+import fs from 'fs'
+import {Product} from './product.js'
+import { error } from 'console'
+
+let id=1
+function generarId() {
+    return id++
+  }
+  
+  
+class ProductManager {
+    #ruta
+    #arrayProcutos
+ 
+
+
+    constructor()
+    {   
+        this.#ruta=`../../dataBase/DataBaseProducts.json`
+        if(fs.existsSync(this.#ruta)){
+            this.#arrayProcutos=JSON.parse(fs.readFileSync(this.#ruta))
+        }else{
+            this.#arrayProcutos=[]
+            fs.writeFileSync(this.#ruta,JSON.stringify(this.#arrayProcutos))
+        }
+    }
+    
+    #validarCampos(product)
+        {
+            if(!product.title || !product.description || !product.price || !product.code  || !product.thumbnail || !product.stock || !(product.price>0)) {
+                throw error('CAMPOS INVALIDOS')
+
+            }else{
+                return product
+                    }
+        } 
+    #validarCodigo(codigo){
+            
+            const product=this.#arrayProcutos.find(product=> product.code === codigo)
+        
+            if ( product) { return false    }
+           
+            return true
+    }
+    
+    async addProduct(newProduct)
+        {     
+                if(this.#validarCampos(newProduct)){
+                    if(this.#validarCodigo(newProduct.code)){
+                        newProduct.id=generarId()
+                        this.#arrayProcutos.push(newProduct)
+                
+                         await fs.promises.writeFile(this.#ruta,JSON.stringify(this.#arrayProcutos,null,2))
+                        console.log('Producto agregado exitosamennte')
+                        return newProduct
+                        
+                    }else{
+                        console.log('Ya existe un producto con el mismo codigo')
+                        return false
+                    }
+                }
+            
+               
+        }
+          
+    
+            
+    
+
+    async getProducts(){
+
+            return [...this.#arrayProcutos]
+
+    }
+    
+    
+    async getProductById(id){
+        try{ 
+            this.#arrayProcutos=JSON.parse(await fs.promises.readFile(this.#ruta,'utf-8'))}
+        catch{
+            throw new Error('OPERACION INVALIDA')
+        }
+        let producto=this.#arrayProcutos.find((product) => product.id === id);
+        if(!producto){
+            console.log('No se encontro el producto con el ID')
+            return false
+        }
+        else{
+            
+            return producto
+        }
+    }
+ 
+    async deleteProductByID(id) {
+       
+        
+        const newArray=this.#arrayProcutos.filter(product => product.id !== id)
+        await fs.promises.writeFile(this.#ruta,JSON.stringify(newArray),null,2)
+        this.#arrayProcutos=newArray
+    }
+    
+    
+    async updateProduct(id,campo,nuevoValor){
+
+                    
+        if( id >0 && this.#arrayProcutos && (campo==='title'|| campo==='description' ||  campo==='price' || campo==='code'  || campo==='thumbnail' || campo==='stock'))
+        {  
+            for (let i=0 ; this.#arrayProcutos.length ; i++){
+                 if(this.#arrayProcutos[i].id===id){
+                this.#arrayProcutos[i][campo]=nuevoValor
+                console.log( this.#arrayProcutos[i][campo])
+                break
+            }
+        }
+         try{
+            await fs.promises.writeFile(this.#ruta, JSON.stringify(this.#arrayProcutos),null,2)
+         }catch(error){
+           
+            throw new Error('OPERACION INVALIDA')
+         }
+     
+    }
+    
+
+
+        }
+}
+
+export const managerProducts = new ProductManager() 

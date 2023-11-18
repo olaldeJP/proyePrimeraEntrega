@@ -1,0 +1,38 @@
+[
+    {
+        "title": "Titulo Nuevo",
+        "description": "Nueva Descripcion",
+        "price": 30,
+        "thumbnail": "2",
+        "code": "59",
+        "stock": 5,
+        "id": 5
+    },
+    {
+        "title": "pedrito",
+        "description": "descipt",
+        "price": 99,
+        "thumbnail": "2",
+        "code": "59",
+        "stock": 5,
+        "id": 2
+    },
+    {
+        "title": "cacho",
+        "description": "Nueva Descripcion",
+        "price": 99,
+        "thumbnail": "2",
+        "code": "59",
+        "stock": 5,
+        "id": 3
+    },
+    {
+        "title": "pedrito",
+        "description": "Nueva Descripcion",
+        "price": 99,
+        "thumbnail": "2",
+        "code": "59",
+        "stock": 5,
+        "id": 1
+    }
+]
