@@ -2,6 +2,10 @@ import { error } from "console"
 import { Carts } from "./carts.js"
 import fs from 'fs'
 
+
+//Manager de Carts con la ruta a la Base de datos y al arreglo de carts
+
+
  class CartsManager{
 
         #ruta
@@ -9,7 +13,7 @@ import fs from 'fs'
 
 
         constructor(){
-
+            
             this.#ruta=`../../dataBase/DataBaseCarts.json`
             this.#arrayCarts = []
             if(fs.existsSync(this.#ruta)){
@@ -22,19 +26,17 @@ import fs from 'fs'
     }
 
 
+    //Agrega un producto al carts, si ya existe en el carro lo suma, sino lo agrega en sumarProductoAlArreglo, si no encuentra el ID tira un Error de ID invalido
        async addProductsCartsByCId(cID,idProduct){
       
             for (let index = 0; index < this.#arrayCarts.length; index++) 
             {
               
                         if(this.#arrayCarts[index].cID==cID){
-                            console.log('entro al If')
                             var cartPorID=this.#arrayCarts[index]
-                            
-                        console.log(cartPorID)
                             break
                         }
-            }console.log(cartPorID)   
+            }   
                 if(cartPorID)
                 {  
                     await this.sumarProductoAlArreglo(idProduct,cartPorID)
@@ -53,6 +55,7 @@ import fs from 'fs'
         
          }
 
+    //Si existe el producto lo suma, sino agrega el producto con el ID del producto y un quantity en 1
     async sumarProductoAlArreglo(idProduct,cartPorID)
          {       
                  const productoCart=cartPorID.productos.find(element=>element.id === idProduct)
@@ -73,28 +76,28 @@ import fs from 'fs'
                              cartPorID.productos.push(nuevoProductCart)
                              console.log(`Se Agrego el producto ${idProduct} en el Carro ${idProduct}`)
                          }
-                        // return (this.getArrayProductsCast())
             
  
      }
         
+    //Crea un nuevo Carts vacio con un ID aleatorio y lo agrega a al archivo de carts
         async createCarts()
         {
             const newCarts=new Carts()
             this.#arrayCarts.push(newCarts)
             await fs.promises.writeFile(this.#ruta,JSON.stringify(this.#arrayCarts))
-            return `Nuevo Carts creado`
+            return `Carts con ID ${newCarts.cID} Creado`
         }
 
             
-
+//devuelve el arreglo de Carts
        async getArrayCast()
         {
             return [...this.#arrayCarts]
         }
 
 
-
+//devuelve el arreglo de productos del cID especifico, si no lo encuentra tira Error
         async getArraysByCId(cID)
             {
             let cartPorID=this.#arrayCarts.find(element => element.cID === cID)
@@ -116,16 +119,3 @@ import fs from 'fs'
     
 export const cartsManager=new CartsManager()
 
-
-
-/*
- const cartM = new CartsManager()
-await cartM.createCarts()
-await cartM.createCarts()
-
-await cartM.addProductsCartsByCId(1,1)
-await cartM.addProductsCartsByCId(1,1)
-await cartM.addProductsCartsByCId(2,2)
-
-console.log(cartM.getArraysByCId(1))
-*/

@@ -1,20 +1,31 @@
 
 import express from 'express'
-import {productsRouter} from './routers/products.Router.js'
-import { cartsRouter } from './routers/carts.Router.js'
- 
+import handlebars from 'express-handlebars'
+import { webRouter } from './routers/web.Routers.js'
+import { apiRouter } from './routers/api.Routers.js'
+
 
 const app=express()
+const PORT= 8080
 
+//Motor de plantillas : Handlebars 
+app.engine('handlebars',handlebars.engine())
+app.set('views','./views')
+
+//Middlewares necesarias
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(productsRouter)
-app.use(cartsRouter)
+app.use(express.static('./public')) 
+app.use(express.static('./views')) 
+app.use('/static',express.static('./static'))
 
 
+//Carga de Routers Api y Web
+app.use('/api',apiRouter)
+app.use('/',webRouter)
 
-
-app.listen(8080,()=>{
+//Se pone a escuchar en el puerto
+app.listen(PORT,()=>{
     console.log('Conectado al puerto 8080');
 })
 

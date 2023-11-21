@@ -1,14 +1,14 @@
 
 export class Product{
 
-    constructor(title,description,price,thumbnail,code,stock){
+    constructor(objProduct){
       
-        this.title=title
-        this.description=description
-        this.price=price
-        this.thumbnail=thumbnail
-        this.code=code
-        this.stock=stock
+        this.title=objProduct.title
+        this.description=objProduct.description
+        this.price=objProduct.price
+        this.thumbnail=objProduct.thumbnail
+        this.code=objProduct.code
+        this.stock=objProduct.stock
     }
 
     toPojo(){

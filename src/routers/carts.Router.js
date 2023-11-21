@@ -3,6 +3,9 @@ import { agregarProductosArregloCartsByCId , mostrarListaDeProductosByCId ,crear
 
 export const cartsRouter=Router()
 
-cartsRouter.post('/api/carts',crearNuevoCarts)
-cartsRouter.post('/api/carts/:cid/product/:pid',agregarProductosArregloCartsByCId)
-cartsRouter.get('/api/carts/:cid',mostrarListaDeProductosByCId)
+
+//Carga de los controllers al router de carts
+
+cartsRouter.post('/',crearNuevoCarts)
+cartsRouter.post('/:cid/product/:pid',agregarProductosArregloCartsByCId)
+cartsRouter.get('/:cid',mostrarListaDeProductosByCId)

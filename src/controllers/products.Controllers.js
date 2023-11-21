@@ -18,28 +18,25 @@ import { managerProducts } from "../services/productManager.js"
 
 // Devuelve el producto con el ID especifico, en caso de no existir deuelve False
  export async function getProductsByIdController(req,res){
-
-    const id=parseInt(req.params.pid)
+    const id=req.params.pid
     const productID=await managerProducts.getProductById(id)
     res.send(productID)
    }
 
 
 export async function postAgregarProductController(req,res){
-   console.log(req.query.status)
-   res.send(`El producto ${req.query.title} con un ID:${req.query.id}`)
+   res.send(`Producto Agregado Exitosamente`)
 
 }
 
 export async function actualizarProductoIdController(req,res){
   
    const objects=req.body
-
    const campos = Object.keys(objects)
    const valores= Object.values(objects);
-   const id=parseInt(req.params.pid)
-
-      for (let index = 0; index < campos.length; index++) {
+   const id=req.params.pid
+   
+   for (let index = 0; index < campos.length; index++) {
          await managerProducts.updateProduct(id,campos[index],valores[index])
       }
 
@@ -47,7 +44,7 @@ export async function actualizarProductoIdController(req,res){
 }
 
 export async function eliminarProductoIdController(req,res){
-   const id=parseInt(req.params.pid)
+   const id=req.params.pid
    await managerProducts.deleteProductByID(id)
    res.send(`${id} ya no esta en la lista`)
 }

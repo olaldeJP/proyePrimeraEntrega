@@ -1,14 +1,10 @@
-
-let id=1
-function generarId(){
-    return id++
-}
+import {v4 as uuidv4} from 'uuid';
 
 export class Carts{
     
     
     constructor(){
-        this.cID=generarId()
+        this.cID=uuidv4();
         this.productos=[]
         
     }
@@ -46,9 +42,11 @@ export class Carts{
 
 
 
-/*
+
 const carts=new Carts()
-const ca=new Carts()/*
+const ca=new Carts()
+
+/*
 carts.sumarProductoAlArreglo(1)
 carts.sumarProductoAlArreglo(1)
 carts.sumarProductoAlArreglo(1)

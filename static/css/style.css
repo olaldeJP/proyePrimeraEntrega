@@ -1,0 +1,19 @@
+body{
+    background-color: rgb(0, 64, 255);
+    
+}
+#formulario{
+    display: flex;
+    gap: 5px;
+    border: 2px black;
+    background-color: aqua;
+    flex-direction: column;
+    width: 60%;
+    justify-content: end;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+    flex-direction: row;
+}

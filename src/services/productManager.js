@@ -1,12 +1,9 @@
 import fs from 'fs'
 import {Product} from './product.js'
 import { error } from 'console'
+import {v4 as uuidv4} from 'uuid';
 
-let id=1
-function generarId() {
-    return id++
-  }
-  
+
   
 class ProductManager {
     #ruta
@@ -47,7 +44,7 @@ class ProductManager {
         {     
                 if(this.#validarCampos(newProduct)){
                     if(this.#validarCodigo(newProduct.code)){
-                        newProduct.id=generarId()
+                        newProduct.id=uuidv4();
                         this.#arrayProcutos.push(newProduct)
                 
                          await fs.promises.writeFile(this.#ruta,JSON.stringify(this.#arrayProcutos,null,2))
@@ -95,20 +92,19 @@ class ProductManager {
        
         
         const newArray=this.#arrayProcutos.filter(product => product.id !== id)
-        await fs.promises.writeFile(this.#ruta,JSON.stringify(newArray),null,2)
         this.#arrayProcutos=newArray
+        await fs.promises.writeFile(this.#ruta,JSON.stringify(this.#arrayProcutos),null,2)
     }
     
     
     async updateProduct(id,campo,nuevoValor){
 
-                    
-        if( id >0 && this.#arrayProcutos && (campo==='title'|| campo==='description' ||  campo==='price' || campo==='code'  || campo==='thumbnail' || campo==='stock'))
+        
+        if(this.#arrayProcutos && (campo==='title'|| campo==='description' ||  campo==='price' || campo==='code'  || campo==='thumbnail' || campo==='stock'))
         {  
-            for (let i=0 ; this.#arrayProcutos.length ; i++){
+            for (let i = 0 ; i < this.#arrayProcutos.length ; i++){
                  if(this.#arrayProcutos[i].id===id){
                 this.#arrayProcutos[i][campo]=nuevoValor
-                console.log( this.#arrayProcutos[i][campo])
                 break
             }
         }
@@ -127,3 +123,5 @@ class ProductManager {
 }
 
 export const managerProducts = new ProductManager() 
+
+

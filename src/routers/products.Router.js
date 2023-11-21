@@ -4,10 +4,10 @@ import { validarCamposMiddleware } from "../middlewares/products.Middlewares.js"
 
 export const  productsRouter = Router()
 
-// Se envia el arreglo con un limite indicado, en el caso que no venga ningun limite, envia el arreglo completo
+//Se agregan todos los Controllers de productos al router productsRouter
 
- productsRouter.get('/api/products', getProductsController)
- productsRouter.get('/api/products/:pid', getProductsByIdController)
- productsRouter.post('/api/products', validarCamposMiddleware , postAgregarProductController)
- productsRouter.put('/api/:pid',actualizarProductoIdController)
- productsRouter.delete('/api/:pid',eliminarProductoIdController)
+ productsRouter.get('/', getProductsController)
+ productsRouter.get('/:pid', getProductsByIdController)
+ productsRouter.post('/', validarCamposMiddleware , postAgregarProductController)
+ productsRouter.put('/:pid',actualizarProductoIdController)
+ productsRouter.delete('/:pid',eliminarProductoIdController)

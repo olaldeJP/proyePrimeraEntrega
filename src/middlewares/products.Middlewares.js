@@ -1,46 +1,13 @@
 import { managerProducts } from "../services/productManager.js";
 
+
+//Valida los campos de los productos enviados desde el body para luego enviarlos al controlador y agregarlos
 export async function validarCamposMiddleware(req,res,next){
-    req.query=producto1
-    req.query.status = true
-    const esValido=await managerProducts.addProduct(req.query)
-    
+    const productoBody= req.body
+  const esValido=await managerProducts.addProduct(productoBody)
     if(!esValido){ 
         throw error('Campos Invalidos')
     }else{
-
         next()
     }
-}
-
-
-
-
-
-const producto1=
-{  
-   title: "" ,
-   description :'descsripcion2',
-   price:48,
-   code:12 ,
-   thumbnail:'rout' ,
-   stock:2
-}
-const producto2=
-{  
-   title: "segundo" ,
-   description :'descsripcion2',
-   price:98,
-   code:9 ,
-   thumbnail:'rout' ,
-   stock:2
-}
-const producto3=
-{  
-   title: "tercero" ,
-   description :'descsripcion3',
-   price:4,
-   code:129 ,
-   thumbnail:'rout' ,
-   stock:2
 }
