@@ -1,0 +1,32 @@
+
+
+{{>navbar}}
+
+
+<h2>Home HandleBars</h2>
+{{#if hayProductos}}
+<h2>Lista de productos por HandleBars</h2>
+<div class="container">
+    
+    {{#each arregloProduct}}
+    <div class="box">
+    
+       <p>ID: {{this.id}}</p>
+       <p>DESCRIPTION: {{this.description}}</p>
+       <p>PRICE: {{this.price}}</p>
+       <p>THUMBNAIL:  {{this.thumbnail}}</p>
+       <p> CODE: {{this.code}}</p>
+       <p> STOCK: {{this.stock}}</p>
+
+    
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<p>Aun no hay productos para mostrar</p>
+{{/if}}
+
+{{>footer}}
+
+<script src="../socket.io/socket.io.js"></script>
+<script src="../static/js/home.JS.js"></script>

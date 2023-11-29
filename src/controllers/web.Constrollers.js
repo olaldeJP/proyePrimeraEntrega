@@ -1,23 +1,31 @@
+import { managerProducts } from "../services/productManager.js"
 
 
 
- export async function formularioWeb(req,res){
-    res.render('formulario.handlebars',
+
+
+ export async function realTimeProductsWeb (req,res){
+    res.render('realTimeProducts.handlebars',
     {
-        titulo:' Formulario'
+        titulo:' realTimeProductsWeb'
     })
     }
 
+export async function homeWeb(req,res){
+    let hayProductos
+    const arregloProduct = await managerProducts.getProducts()
 
-export async function productosWeb(req,res){
-  
-   res.render('productos.handlebars',
-   {
-    hayProductos: true,
-    productos:
-    [
-    {title:'a',description:'b'},
-    {title:'a',description:'b'}
-    ] 
+   if(arregloProduct.length > 0) 
+        {
+             hayProductos=true
+        }else 
+            {
+             hayProductos=false
+            }
+
+   res.render('home.handlebars',
+   { titulo:'Home',
+    hayProductos,
+    arregloProduct
     })
 }

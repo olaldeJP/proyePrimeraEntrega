@@ -6,8 +6,8 @@ export const  productsRouter = Router()
 
 //Se agregan todos los Controllers de productos al router productsRouter
 
- productsRouter.get('/', getProductsController)
- productsRouter.get('/:pid', getProductsByIdController)
- productsRouter.post('/', validarCamposMiddleware , postAgregarProductController)
+ productsRouter.get('/',  getProductsController)
+ productsRouter.get('/:pid',  getProductsByIdController)
+ productsRouter.post('/',  validarCamposMiddleware , postAgregarProductController)
  productsRouter.put('/:pid',actualizarProductoIdController)
  productsRouter.delete('/:pid',eliminarProductoIdController)
