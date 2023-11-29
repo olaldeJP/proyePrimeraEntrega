@@ -28,6 +28,7 @@ buttonProducts?.addEventListener("click", (event) => {
   socket.emit("peticionEnviada", () => {
     console.log("Peticion Enviada");
   });
+
   const idProduct = formProduct.idProduct.value;
   switch (formProduct.selectFormProducts.value) {
     case "POST":
@@ -51,6 +52,7 @@ buttonProducts?.addEventListener("click", (event) => {
       } else {
         fetch(`http://localhost:8080/api/products`)
           .then((res) => {
+            console.log(res);
             return res.json();
           })
           .then((products) => {
@@ -89,7 +91,8 @@ buttonProducts?.addEventListener("click", (event) => {
 
 function mostrarProductsEnPantalla(products) {
   divELements.innerHTML = "";
-  if (products) {
+
+  if (!(products["status"] == "error")) {
     if (Array.isArray(products)) {
       for (let index = 0; index < products.length; index++) {
         const nuevoElement = document.createElement("div");

@@ -71,11 +71,11 @@ class ProductManager {
         await fs.promises.readFile(this.#ruta, "utf-8")
       );
     } catch (error) {
-      return error;
+      throw error("Error al leer el archivo");
     }
     let producto = this.#arrayProcutos.find((product) => product.id === id);
     if (!producto) {
-      return error;
+      throw error("Error ID invalido");
     } else {
       return producto;
     }
