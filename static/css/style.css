@@ -2,12 +2,25 @@ body{
     background-color: rgba(0, 64, 255, 0.74);
     
 }
-
+.centrarElementos{
+    display: flex;
+}
 .navBar{
    
     display: flex;  
     justify-content: space-around;
     border:  solid 1px black;
+}
+
+.sectionForms{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+.selectForms{
+    width: 30%;
+    margin-bottom: 10px ;
 }
 .formulario{
     display: flex;
@@ -47,10 +60,20 @@ a:hover{
     display: flex;
     justify-content: center;
 }
+.boxElement{
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 20px;
+}
+
 .box{
-    margin: 10px;
-    padding: 5px;
-    border: solid 1px rgb(255, 255, 255);
+    margin-right: 20px;
+    border: solid 2px rgb(255, 255, 255);
+    width: 330px;
+    background-color: #3498db;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .hidden{

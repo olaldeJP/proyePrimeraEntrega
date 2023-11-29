@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>test</title>
+    
+</head>
+<body>
+    <nav class="navBar ">
+        <div>
+         <p>Logo</p>
+         </div>
+         <div>
+         <ul>
+             <li><a href="">Inicio</a></li>
+             <li><a href="">Productos</a></li>
+             <li><a href="">Carts</a></li>
+         </ul>
+         </div>
+     </nav>
+    
+<main class="sectionForms centrarElementos">
+
+    <section class="sectionIzquierda">
+        <div id="optionSelect" class="selectForms">
+            <option value="productos">Productos</option>
+            <option value="carts">Carts</option>
+        </div>
+
+    <div class="divFormProducts centrarElementos">
+        <form id ="formularioProducts"class="formulario" action="">
+            <input id="idProduct" type="text" placeholder="ID del producto en caso querer buscarlo">
+            <input id="titulo" type="text" placeholder="Titulo Del Producto">
+            <input id="description" type="text" placeholder="Descripcion">
+            <input id="precio" type="number" placeholder="Precio">
+            <input id="codigo" type="number" placeholder="Codigo">
+            <input id="thumbnail" type="text" name="thumbnail" placeholder="thumbnail">
+            <input id="stock" type="number" placeholder="Stock">
+            <select id="selectFormProducts" name="peticion">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+            </select>
+            <input id="buttonFormProducts" type="submit" value="Enviar Peticion">
+        </form>
+     </div>
+     <div class="divFormCarts hidden">
+            <form class="formulario" action="">
+                <input type="text" id="cIdInput" placeholder="Ingrese el ID del Carts">
+                <input type="text" id="productID" placeholder="Ingrese el ID del producto a agregar">
+                <select id="selectFormCart">
+                <option value="getCartsSelect">GET</option>
+                <option value="postCartsSelect">POST</option>
+                </select>
+                <input id="buttonFormCarts" type="submit" value="Enviar Peticion">
+            </form>
+     </div>
+    </section>
+    <section class="sectionDerecho">
+
+    </section>
+     </main>
+     <section class="sectionProducts">
+     <div class="boxElement">
+    
+     </div>  
+     </section> 
+    </main>
+
+
+
+     <footer>
+        <p> El Footer Se Agrego</p>
+    </footer>
+</body>
+<script src="js/realTimeProducts.js"></script>
+</html>

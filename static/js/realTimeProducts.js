@@ -45,8 +45,8 @@ buttonProducts?.addEventListener("click", (event) => {
           .then((res) => {
             return res.json();
           })
-          .then((product) => {
-            console.log(product);
+          .then((products) => {
+            mostrarProductsEnPantalla(products);
           });
       } else {
         fetch(`http://localhost:8080/api/products`)
@@ -54,7 +54,7 @@ buttonProducts?.addEventListener("click", (event) => {
             return res.json();
           })
           .then((products) => {
-            console.log(products);
+            mostrarProductsEnPantalla(products);
           });
       }
       break;
@@ -76,38 +76,69 @@ buttonProducts?.addEventListener("click", (event) => {
         },
         body: JSON.stringify(JSONProductForm()),
       });
-
+      break;
     default:
-      throw error("Error enviar peticion");
+      divELements.innerHTML = `ERROR EN LA PETICION`;
       break;
   }
-
+  socket.emit("resetProduct", () => {});
   socket.on("sendProducts", (products) => {
-    divELements.innerHTML = "";
-    for (let index = 0; index < products.length; index++) {
-      const nuevoElement = document.createElement("div");
-      nuevoElement.classList.add("box");
-      nuevoElement.innerHTML = `
-      <p>ID: ${products[index].id}</p> 
-      <p>TITULO: ${products[index].title}</p>
-      <p>DESCRIPCION: ${products[index].description}</p>
-      <p>STOCK: ${products[index].stock}</p> 
-      <p>CODIGO: ${products[index].code}</p>`;
-      divELements.appendChild(nuevoElement);
-    }
+    mostrarProductsEnPantalla(products);
   });
 });
 
-socket.emit("resetProduct", () => {});
+function mostrarProductsEnPantalla(products) {
+  divELements.innerHTML = "";
+  if (products) {
+    if (Array.isArray(products)) {
+      for (let index = 0; index < products.length; index++) {
+        const nuevoElement = document.createElement("div");
+        nuevoElement.classList.add("box");
+        nuevoElement.innerHTML = `
+        <p>ID: ${products[index].id}</p> 
+        <p>TITULO: ${products[index].title}</p>
+        <p>DESCRIPCION: ${products[index].description}</p>
+        <p>PRECIO: ${products[index].price}</p>
+        <p>STOCK: ${products[index].stock}</p> 
+        <p>CODIGO: ${products[index].code}</p>`;
+        divELements.appendChild(nuevoElement);
+      }
+    } else {
+      const nuevoElement = document.createElement("div");
+      nuevoElement.classList.add("box");
+      nuevoElement.innerHTML = `
+        <p>ID: ${products.id}</p> 
+        <p>TITULO: ${products.title}</p>
+        <p>DESCRIPCION: ${products.description}</p>
+        <p>PRECIO: ${products.price}</p>
+        <p>STOCK: ${products.stock}</p> 
+        <p>CODIGO: ${products.code}</p>`;
+      divELements.appendChild(nuevoElement);
+    }
+  } else {
+    divELements.innerHTML = `INFORMACION NO VALIDA`;
+  }
+}
 
 function JSONProductForm() {
-  const productForm = {
-    title: formProduct.titulo.value,
-    description: formProduct.description.value,
-    price: formProduct.precio.value,
-    code: formProduct.codigo.value,
-    thumbnail: formProduct.thumbnail.value,
-    stock: formProduct.stock.value,
-  };
+  let productForm = {};
+  if (formProduct.titulo.value) {
+    productForm.title = formProduct.titulo.value;
+  }
+  if (formProduct.description.value) {
+    productForm.description = formProduct.description.value;
+  }
+  if (formProduct.precio.value) {
+    productForm.price = formProduct.precio.value;
+  }
+  if (formProduct.codigo.value) {
+    productForm.code = formProduct.codigo.value;
+  }
+  if (formProduct.thumbnail.value) {
+    productForm.thumbnail = formProduct.thumbnail.value;
+  }
+  if (formProduct.stock.value) {
+    productForm.stock = formProduct.stock.value;
+  }
   return productForm;
 }
