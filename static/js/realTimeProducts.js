@@ -52,7 +52,6 @@ buttonProducts?.addEventListener("click", (event) => {
       } else {
         fetch(`http://localhost:8080/api/products`)
           .then((res) => {
-            console.log(res);
             return res.json();
           })
           .then((products) => {
@@ -98,7 +97,7 @@ function mostrarProductsEnPantalla(products) {
         const nuevoElement = document.createElement("div");
         nuevoElement.classList.add("box");
         nuevoElement.innerHTML = `
-        <p>ID: ${products[index].id}</p> 
+        <p>ID: ${products[index]._id}</p> 
         <p>TITULO: ${products[index].title}</p>
         <p>DESCRIPCION: ${products[index].description}</p>
         <p>PRECIO: ${products[index].price}</p>
@@ -110,7 +109,7 @@ function mostrarProductsEnPantalla(products) {
       const nuevoElement = document.createElement("div");
       nuevoElement.classList.add("box");
       nuevoElement.innerHTML = `
-        <p>ID: ${products.id}</p> 
+        <p>ID: ${products._id}</p> 
         <p>TITULO: ${products.title}</p>
         <p>DESCRIPCION: ${products.description}</p>
         <p>PRECIO: ${products.price}</p>

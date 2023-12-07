@@ -27,7 +27,7 @@ class ProductManager {
       !product.stock ||
       !(product.price > 0)
     ) {
-      return error("CAMPOS INVALIDOS");
+      throw error("CAMPOS INVALIDOS");
     } else {
       return product;
     }
@@ -38,7 +38,7 @@ class ProductManager {
     );
 
     if (product) {
-      return false;
+      throw new error("Codigo repetido");
     }
 
     return true;
@@ -56,7 +56,7 @@ class ProductManager {
         );
         return newProduct;
       } else {
-        return false;
+        throw new error("Error agregando el producto");
       }
     }
   }
@@ -75,7 +75,7 @@ class ProductManager {
     }
     let producto = this.#arrayProcutos.find((product) => product.id === id);
     if (!producto) {
-      throw error("Error ID invalido");
+      throw new error("Error ID invalido");
     } else {
       return producto;
     }

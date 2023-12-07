@@ -85,9 +85,10 @@ class CartsManager {
     if (cartPorID) {
       return [...cartPorID.productos];
     } else {
-      return error(" Carts ID INVALIDO");
+      throw error("ID INVALIDO");
     }
   }
+  async deleateCarts(cID) {}
 }
 
 export const cartsManager = new CartsManager();

@@ -6,6 +6,7 @@ import { Server } from "socket.io";
 import {
   onConnection,
   inyectarSocketServer,
+  socketMessage,
 } from "./socket/socket.Controllers.js";
 
 const app = express();
@@ -33,5 +34,6 @@ webSocketServer.on("connection", onConnection(webSocketServer));
 
 //Carga de Routers Api,Web y la funcion del socket para devolver los productos
 app.use(inyectarSocketServer(webSocketServer));
+app.use(socketMessage(webSocketServer));
 app.use("/api", apiRouter);
 app.use("/", webRouter);

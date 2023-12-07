@@ -1,5 +1,5 @@
-import { cartsManager } from "../services/cartsManager.js";
-import { managerProducts } from "../services/productManager.js";
+import { cartsManager } from "../dao/services/cartsManager.js";
+import { managerProducts } from "../dao/services/productManager.js";
 
 //Constrollers de los Carts que se agregaran al Carts Router
 

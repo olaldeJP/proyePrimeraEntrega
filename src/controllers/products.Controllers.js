@@ -1,4 +1,6 @@
-import { managerProducts } from "../services/productManager.js";
+import { managerProducts } from "../dao/services/productManager.js";
+import { productsMongoose } from "../dao/services/index.js";
+import { conectar, desconectar } from "../dao/services/index.js";
 
 // funciones GET constrollers de los productos
 
@@ -6,15 +8,20 @@ import { managerProducts } from "../services/productManager.js";
 export async function getProductsController(req, res) {
   try {
     const cantidad = parseInt(req.query.limit);
-    const array = await managerProducts.getProducts();
+    // FORMA DE OBTENER LOS PRODUCTOS CON FILE SYSTEM:
+    //const array = await managerProducts.getProducts();
+
+    //FORMA CON MONGOOSE:
+    await conectar();
+    const array2 = await productsMongoose.find().lean();
+    await desconectar();
     if (!cantidad) {
-      res.status(200).json(array);
+      return res.status(200).json(array2);
     } else {
-      array.slice(0, cantidad);
-      res.status(200).json(array.slice(0, cantidad));
+      return res.status(200).json(array2.slice(0, cantidad));
     }
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       status: "error en mostrar los productos",
       message: error.message,
     });
@@ -24,11 +31,15 @@ export async function getProductsController(req, res) {
 // Devuelve el producto con el ID especifico, en caso de no existir deuelve False
 export async function getProductsByIdController(req, res) {
   try {
-    const id = req.params.pid;
-    const productID = await managerProducts.getProductById(id);
-    res.status(200).json(productID);
+    const _id = req.params.pid;
+    // const productID = await managerProducts.getProductById(id);
+    await conectar();
+    const productID = await productsMongoose.findById(_id).lean();
+    await desconectar();
+    return res.status(200).json(productID);
   } catch (error) {
-    res.status(400).json({
+    await desconectar();
+    return res.status(400).json({
       status: "error",
       message: "error en mostrar el producto por ID ",
     });
@@ -38,9 +49,9 @@ export async function getProductsByIdController(req, res) {
 export async function postAgregarProductController(req, res) {
   try {
     res["sendProducts"]();
-    res.status(201).json(res["productBody"]);
+    return res.status(201).json(res["productBody"]);
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       status: "error",
       message: error.message,
     });
@@ -58,9 +69,9 @@ export async function actualizarProductoIdController(req, res) {
     }
 
     res["sendProducts"]();
-    res.status(201).json(await managerProducts.getProductById(id));
+    return res.status(201).json(await managerProducts.getProductById(id));
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       status: "error",
       message: " Error al Actualizando producto",
     });
@@ -73,13 +84,72 @@ export async function eliminarProductoIdController(req, res) {
   try {
     await managerProducts.deleteProductByID(id);
     res["sendProducts"]();
-    res
+    return res
       .status(201)
       .json({ status: "success", messagge: `${id} ya no esta en la lista` });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       status: "error",
       message: "error Eliminando producto",
     });
+  }
+}
+
+export async function postAgregarProductMongoDBController(req, res) {
+  try {
+    await conectar();
+    const nuevoProduct = await productsMongoose.create(req.body);
+    await desconectar();
+    return res.status(201).json(nuevoProduct.toObject());
+  } catch (error) {
+    await desconectar();
+    return res.status(400).json({ status: "error", message: error.message });
+  }
+}
+
+export async function actualizarProductoIdMongoController(req, res) {
+  try {
+    await conectar();
+    const _id = req.params.pid;
+    const productUpdate = await productsMongoose.findByIdAndUpdate(
+      _id,
+      { $set: req.body },
+      {
+        new: true,
+      }
+    );
+    await desconectar();
+    if (!productUpdate) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "id no encontrado" });
+    } else {
+      return res.status(200).json(productUpdate);
+    }
+  } catch (error) {
+    await desconectar();
+    return res.status(400).json({ status: "error", message: error.message });
+  }
+}
+
+export async function deleteProductMongoose(req, res) {
+  try {
+    await conectar();
+    const _id = req.params.pId;
+    const productoEliminado = await productsMongoose
+      .findByIdAndDelete(_id)
+      .lean();
+
+    await desconectar();
+    if (!productoEliminado) {
+      return res.status(400).json({
+        status: "error",
+        message: "Id Invalido para eliminar el producto",
+      });
+    }
+    return res.status(200).json(productoEliminado);
+  } catch (error) {
+    await desconectar();
+    return res.status(400).json({ status: "error", message: error.message });
   }
 }

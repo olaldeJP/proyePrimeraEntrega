@@ -1,13 +1,31 @@
 import { Router } from "express";
-import { getProductsController , getProductsByIdController,eliminarProductoIdController,actualizarProductoIdController,postAgregarProductController} from "../controllers/products.Controllers.js";
+import {
+  getProductsController,
+  getProductsByIdController,
+  eliminarProductoIdController,
+  actualizarProductoIdController,
+  postAgregarProductController,
+  postAgregarProductMongoDBController,
+  actualizarProductoIdMongoController,
+  deleteProductMongoose,
+} from "../controllers/products.Controllers.js";
 import { validarCamposMiddleware } from "../middlewares/products.Middlewares.js";
 
-export const  productsRouter = Router()
+export const productsRouter = Router();
 
 //Se agregan todos los Controllers de productos al router productsRouter
-
- productsRouter.get('/',  getProductsController)
- productsRouter.get('/:pid',  getProductsByIdController)
- productsRouter.post('/',  validarCamposMiddleware , postAgregarProductController)
- productsRouter.put('/:pid',actualizarProductoIdController)
- productsRouter.delete('/:pid',eliminarProductoIdController)
+//Los gets simplemente comente los getProducts del Filesystem y use el find() de mongoose y funciono perfectamente
+productsRouter.get("/", getProductsController);
+productsRouter.get("/:pid", getProductsByIdController);
+//Para Agregar con fileSistem:
+//productsRouter.post('/',  validarCamposMiddleware , postAgregarProductController)
+//Agregar producto con Mongoose:
+productsRouter.post("/", postAgregarProductMongoDBController);
+//Actualizar por FileSystem:
+//productsRouter.put("/:pid", actualizarProductoIdController);
+//Actualizar por Mongoose:
+productsRouter.put("/:pid", actualizarProductoIdMongoController);
+//Eliminar producto en FileSystem
+//productsRouter.delete("/:pid", eliminarProductoIdController);
+//Eliminar por Mongoose:
+productsRouter.delete("/:pId", deleteProductMongoose);
