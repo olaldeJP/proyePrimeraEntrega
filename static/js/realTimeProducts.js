@@ -39,6 +39,17 @@ buttonProducts?.addEventListener("click", (event) => {
         },
         body: JSON.stringify(JSONProductForm()),
       });
+
+      if (!formProduct.inputImg.files === 0) {
+        const img = new FormData(formProduct.inputImg);
+        fetch("http://localhost:8080/api/addImg", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: img,
+        });
+      }
       break;
     case "GET":
       if (idProduct) {
@@ -122,6 +133,16 @@ function mostrarProductsEnPantalla(products) {
   }
 }
 
+formProduct.selectFormProducts.addEventListener("change", () => {
+  if (formProduct.selectFormProducts.value == "POST") {
+    document.querySelector("#inputImg").disabled = false;
+    formProduct.idProduct.disabled = true;
+  } else {
+    document.querySelector("#inputImg").disabled = true;
+    formProduct.idProduct.disabled = false;
+  }
+});
+
 function JSONProductForm() {
   let productForm = {};
   if (formProduct.titulo.value) {
@@ -142,5 +163,6 @@ function JSONProductForm() {
   if (formProduct.stock.value) {
     productForm.stock = formProduct.stock.value;
   }
+
   return productForm;
 }

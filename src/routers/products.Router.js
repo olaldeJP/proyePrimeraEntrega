@@ -1,8 +1,10 @@
 import { Router } from "express";
+import { upload } from "../middlewares/multer.Middlewares.js";
 import {
   getProductsController,
   getProductsByIdController,
   eliminarProductoIdController,
+  agregarImg,
   actualizarProductoIdController,
   postAgregarProductController,
   postAgregarProductMongoDBController,
@@ -20,6 +22,7 @@ productsRouter.get("/:pid", getProductsByIdController);
 //Para Agregar con fileSistem:
 //productsRouter.post('/',  validarCamposMiddleware , postAgregarProductController)
 //Agregar producto con Mongoose:
+productsRouter.post("/addImg", upload.single("imagenProductos"));
 productsRouter.post("/", postAgregarProductMongoDBController);
 //Actualizar por FileSystem:
 //productsRouter.put("/:pid", actualizarProductoIdController);

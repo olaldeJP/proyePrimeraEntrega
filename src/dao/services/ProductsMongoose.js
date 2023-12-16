@@ -1,5 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const productoSchema = new Schema(
   {
@@ -24,5 +25,5 @@ const productoSchema = new Schema(
     },
   }
 );
-
+productoSchema.plugin(mongoosePaginate);
 export const productsManagerMongoose = model("products", productoSchema);

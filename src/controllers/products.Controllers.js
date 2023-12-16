@@ -1,7 +1,7 @@
 import { managerProducts } from "../dao/services/productManager.js";
 import { productsMongoose } from "../dao/services/index.js";
 import { conectar, desconectar } from "../dao/services/index.js";
-
+import { changeNameAndId } from "../middlewares/multer.Middlewares.js";
 // funciones GET constrollers de los productos
 
 //getProductsController Devuelve la lista de los productos almacenados en la base de datos, si existe un limite en req.query.limit, devolvera solo los promeros limits del arreglo
@@ -14,9 +14,15 @@ export async function getProductsController(req, res) {
     //FORMA CON MONGOOSE:
     await conectar();
     const array2 = await productsMongoose.find().lean();
+    const limitar = await productsMongoose.aggregate[
+      {
+        $limit: { cantidad },
+      }
+    ];
+
     await desconectar();
     if (!cantidad) {
-      return res.status(200).json(array2);
+      return res.status(200).json(limitar);
     } else {
       return res.status(200).json(array2.slice(0, cantidad));
     }
@@ -45,7 +51,7 @@ export async function getProductsByIdController(req, res) {
     });
   }
 }
-
+//Se envia la funcion agregada en res["sendProducts"]() del socket para actualizar los productos
 export async function postAgregarProductController(req, res) {
   try {
     res["sendProducts"]();
@@ -58,6 +64,7 @@ export async function postAgregarProductController(req, res) {
   }
 }
 
+//Se envia por un body los campos y los valores a actualizar en el producto, ademas de volver a enviar los productos con el socket
 export async function actualizarProductoIdController(req, res) {
   const objects = req.body;
   const campos = Object.keys(objects);
@@ -78,6 +85,7 @@ export async function actualizarProductoIdController(req, res) {
   }
 }
 
+//Se elimina el producto de la base de datos y se envia los productos por el socket
 export async function eliminarProductoIdController(req, res) {
   const id = req.params.pid;
 
@@ -95,8 +103,11 @@ export async function eliminarProductoIdController(req, res) {
   }
 }
 
+//se crea un producto nuevo en la base de datos
+
 export async function postAgregarProductMongoDBController(req, res) {
   try {
+    // changeNameAndId(req);
     await conectar();
     const nuevoProduct = await productsMongoose.create(req.body);
     await desconectar();
@@ -153,3 +164,5 @@ export async function deleteProductMongoose(req, res) {
     return res.status(400).json({ status: "error", message: error.message });
   }
 }
+
+export async function agregarImg(req, res) {}

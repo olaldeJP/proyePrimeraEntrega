@@ -5,6 +5,8 @@ import {
   usserRegister,
   saveAndSend,
   chatHandlebars,
+  mostrarProducto,
+  mostrarProductosCarrito,
   homeWeb,
 } from "../controllers/web.Constrollers.js";
 
@@ -25,5 +27,14 @@ webRouter.post("/messagePost", saveAndSend);
 //Chequea que el usser y el password enviados en el boddy esten en la base de datos de mongo
 webRouter.get("/logginUsser", logginUsser);
 
-//Muestra los productos por Handlebars
+//Muestra los productos con paginate con Handlebars
 webRouter.get("/", homeWeb);
+
+//Muestra Productos con Paginate con HandleBars
+webRouter.get("/products", homeWeb);
+
+//descripcion del producto
+webRouter.get("/:pid", mostrarProducto);
+
+// visualizar solo un carrito especifico
+webRouter.get("/carts/:cid", mostrarProductosCarrito);
