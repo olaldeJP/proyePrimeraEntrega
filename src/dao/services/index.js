@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
+import { URL_MONGO } from "./config.js";
 
 export async function conectar() {
-  await mongoose.connect(
-    "mongodb+srv://olaldejp:kpYKgBF6WyJA5VJN@cluster0.knkx5ka.mongodb.net/ecommerce"
-  );
+  await mongoose.connect(URL_MONGO);
 }
 
 export async function desconectar() {
   await mongoose.disconnect();
 }
 
-export { productsManagerMongoose as productsMongoose } from "./ProductsMongoose.js";
-export { cartsManagerMongoose as cartsMongoose } from "./CartsMongoose.js";
+export { productsManagerMongoose as productsMongoose } from "../models/db/ProductsMongoose.js";
+export { cartsManagerMongoose as cartsMongoose } from "../models/db/CartsMongoose.js";
+export { ussersModel as ussersMongoose } from "../models/db/ussersMongoose.js";

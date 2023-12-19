@@ -1,0 +1,20 @@
+
+{{#if usuario}}
+
+{{>navbarConectado}}
+
+{{else}}
+
+{{>navbarNoConectado}}
+{{/if}}
+
+<form action="" method="post" id="formulario">
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email">
+    <label for="constraseña">Contraseña</label>
+    <input type="password" name="" id="constraseña">
+    <input type="submit" value="Log In">
+</form>
+
+{{>footer}}
+<script src="../static/js/login.js"></script>

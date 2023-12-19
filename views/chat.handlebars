@@ -1,5 +1,11 @@
-{{>navbar}}
 
+{{#if usuario}}
+{{>navbarConectado}}
+
+{{else}}
+
+{{>navbarNoConectado}}
+{{/if}}
 
 
 <section class="modal ">

@@ -1,5 +1,11 @@
-{{>navbar}}
 
+{{#if usuario}}
+{{>navbarConectado}}
+
+{{else}}
+
+{{>navbarNoConectado}}
+{{/if}}
 
  <div class="box">
     
@@ -14,7 +20,6 @@
     </div>
 
 
-
-<script src="../static/js/home.JS.js"></script>
 {{>footer}}
+<script src="../static/js/home.JS.js"></script>
 

@@ -10,7 +10,7 @@ import {
   eliminarTodosLosProductosDelCarrito,
 } from "../controllers/carts.Constrollers.js";
 
-export const cartsRouter = Router();
+export const cartsRouter = new Router();
 
 //Carga de los controllers al router de carts
 

@@ -1,4 +1,13 @@
-{{>navbar}}
+
+{{#if usuario}}
+
+{{>navbarNoConectado}}
+
+{{else}}
+
+{{>navbarConectado}}
+{{/if}}
+
  <button onclick="volver()"> VOLVER </button> 
     {{#if products}}
         {{#each products}}

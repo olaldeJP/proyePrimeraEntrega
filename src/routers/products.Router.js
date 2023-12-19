@@ -13,7 +13,7 @@ import {
 } from "../controllers/products.Controllers.js";
 import { validarCamposMiddleware } from "../middlewares/products.Middlewares.js";
 
-export const productsRouter = Router();
+export const productsRouter = new Router();
 
 //Se agregan todos los Controllers de productos al router productsRouter
 //Los gets simplemente comente los getProducts del Filesystem y use el find() de mongoose y funciono perfectamente

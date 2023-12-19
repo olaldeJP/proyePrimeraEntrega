@@ -1,5 +1,5 @@
 import { error } from "console";
-import { Carts } from "../models/carts.js";
+import { Carts } from "./carts.js";
 import fs from "fs";
 
 //Manager de Carts con la ruta a la Base de datos y al arreglo de carts

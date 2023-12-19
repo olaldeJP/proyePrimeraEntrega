@@ -5,7 +5,7 @@ import {
   conectar,
   productsMongoose,
 } from "../dao/services/index.js";
-import { MessagesManagerMongoose } from "../dao/services/messagesMongoose.js";
+import { MessagesManagerMongoose } from "../dao/models/db/messagesMongoose.js";
 
 export function onConnection(socketServer) {
   return async function (socket) {

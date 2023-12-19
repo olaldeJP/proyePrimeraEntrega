@@ -5,10 +5,14 @@ import {
   usserRegister,
   saveAndSend,
   chatHandlebars,
+  conectUsser,
   mostrarProducto,
   mostrarProductosCarrito,
+  ventanaRegister,
+  ventanaLogin,
   homeWeb,
 } from "../controllers/web.Constrollers.js";
+import { cookieCreate } from "../middlewares/cookies.Middlewares.js";
 
 export const webRouter = new Router();
 
@@ -17,6 +21,13 @@ webRouter.get("/realTimeProducts", realTimeProductsWeb);
 
 //Renreriza la ventana de chatHandlebars
 webRouter.get("/chatHandlebars", chatHandlebars);
+
+//Muestra ventana de registro.handlebars
+webRouter.get("/register", ventanaRegister);
+
+////Muestra ventana de Login.handlebars
+webRouter.get("/login", ventanaLogin);
+webRouter.post("/login/conect", conectUsser);
 
 //Guarda el usuario y contraseña en la base de datos de mongose
 webRouter.post("/usserRegister", usserRegister);
@@ -28,8 +39,8 @@ webRouter.post("/messagePost", saveAndSend);
 webRouter.get("/logginUsser", logginUsser);
 
 //Muestra los productos con paginate con Handlebars
+//cookieCreate
 webRouter.get("/", homeWeb);
-
 //Muestra Productos con Paginate con HandleBars
 webRouter.get("/products", homeWeb);
 

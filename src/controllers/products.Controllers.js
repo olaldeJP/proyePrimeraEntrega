@@ -1,4 +1,4 @@
-import { managerProducts } from "../dao/services/productManager.js";
+import { managerProducts } from "../dao/models/fs/productManager.js";
 import { productsMongoose } from "../dao/services/index.js";
 import { conectar, desconectar } from "../dao/services/index.js";
 import { changeNameAndId } from "../middlewares/multer.Middlewares.js";

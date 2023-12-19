@@ -1,5 +1,5 @@
 import fs from "fs";
-import { Product } from "../models/product.js";
+import { Product } from "./product.js";
 import { error } from "console";
 import { v4 as uuidv4 } from "uuid";
 

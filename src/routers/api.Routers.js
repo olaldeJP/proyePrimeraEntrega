@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { productsRouter } from "./products.Router.js";
 import { cartsRouter } from "./carts.Router.js";
+import { ussersRouter } from "./ussers.Router.js";
 
 export const apiRouter = new Router();
 
@@ -8,3 +9,4 @@ export const apiRouter = new Router();
 
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/carts", cartsRouter);
+apiRouter.use("/sessions", ussersRouter);

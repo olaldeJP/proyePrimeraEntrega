@@ -1,8 +1,9 @@
-import { managerProducts } from "../dao/services/productManager.js";
-import { MessagesManagerMongoose } from "../dao/services/messagesMongoose.js";
-import { usserSchema } from "../dao/services/UssersManager.js";
+import { managerProducts } from "../dao/models/fs/productManager.js";
+import { MessagesManagerMongoose } from "../dao/models/db/messagesMongoose.js";
+//import { usserSchema } from "../dao/models/fs/UssersManager.js";
 import { cartsMongoose, conectar, desconectar } from "../dao/services/index.js";
 import { productsMongoose } from "../dao/services/index.js";
+import { ussersMongoose } from "../dao/services/index.js";
 
 export async function realTimeProductsWeb(req, res) {
   return res.status(200).render("realTimeProducts.handlebars", {
@@ -24,12 +25,10 @@ export async function homeWeb(req, res) {
         price: req.query.sort === "desc" ? -1 : 1,
       };
     }
-    if (req.query) {
-    } else {
+    if (req.query.query) {
     }
 
     await conectar();
-
     const productos = await productsMongoose.paginate(
       criterioBusqueda,
       opcionesDePaginacion
@@ -99,7 +98,7 @@ export async function logginUsser(req, res) {
 export async function usserRegister(req, res) {
   try {
     await conectar();
-    const newUsser = await usserSchema.create(req.body);
+    // const newUsser = await usserSchema.create(req.body);
     await desconectar();
     return res.status(200).json(newUsser);
   } catch (error) {
@@ -129,7 +128,7 @@ export async function mostrarProducto(req, res) {
 
     return res.status(200).render("product.handlebars", { producto });
   } catch (error) {
-    return res.status(400).json({ status: "ERROR", message: message.error });
+    return res.status(400).json({ status: "ERROR", message: error.message });
   }
 }
 
@@ -149,5 +148,39 @@ export async function mostrarProductosCarrito(req, res) {
         .json({ status: "ERROR", message: "Id del carrito invalido" });
   } catch (error) {
     res.status(400).json({ status: "ERROR", message: error.message });
+  }
+}
+
+export async function ventanaRegister(req, res) {
+  try {
+    res.status(200).render("register.handlebars", { status: "success" });
+  } catch (error) {
+    res.status(400).render("register.handlebars", { status: "error" });
+  }
+}
+export async function conectUsser(req, res) {
+  try {
+    await conectar();
+    const usuario = await ussersMongoose.findOne(req.body).lean();
+    await desconectar();
+    console.log(usuario);
+    if (!usuario) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Usuario No Encontrado" });
+    }
+
+    return res.status(200).render("login.handlebars", { usuario: usuario });
+  } catch (error) {
+    res
+      .status(400)
+      .render("login.handlebars", { status: "error", message: error.message });
+  }
+}
+export async function ventanaLogin(req, res) {
+  try {
+    res.status(200).render("login.handlebars", { status: "success" });
+  } catch (error) {
+    res.status(400).render("login.handlebars", { status: "error" });
   }
 }

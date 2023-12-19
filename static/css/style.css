@@ -95,6 +95,8 @@ a:hover{
     display: flex;
     justify-content: center;
 }
+
+
 .boxElement{
   display: flex;
   overflow-x: auto;
@@ -128,7 +130,6 @@ a:hover{
 .hidden{
    display: none;
 }
-
 
 
 
