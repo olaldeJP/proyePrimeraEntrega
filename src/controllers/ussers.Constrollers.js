@@ -19,3 +19,24 @@ export async function registrarUsuario(req, res) {
     return res.status(400).json({ status: "error", message: error.message });
   }
 }
+
+export async function conectUsser(req, res) {
+  try {
+    await conectar();
+    const usser = await ussersMongoose.findOne(req.body).lean();
+    await desconectar();
+    if (!usser) {
+      console.log("entro");
+      return res
+        .status(400)
+        .json({ status: "error", message: "Usuario No Encontrado" });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      usuario: { firstName: usser.first_name, lastName: usser.last_name },
+    });
+  } catch (error) {
+    return res.status(200).json({ status: "error", message: error.message });
+  }
+}

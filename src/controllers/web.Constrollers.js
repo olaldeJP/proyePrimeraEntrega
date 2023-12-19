@@ -158,25 +158,7 @@ export async function ventanaRegister(req, res) {
     res.status(400).render("register.handlebars", { status: "error" });
   }
 }
-export async function conectUsser(req, res) {
-  try {
-    await conectar();
-    const usuario = await ussersMongoose.findOne(req.body).lean();
-    await desconectar();
-    console.log(usuario);
-    if (!usuario) {
-      return res
-        .status(400)
-        .json({ status: "error", message: "Usuario No Encontrado" });
-    }
 
-    return res.status(200).render("login.handlebars", { usuario: usuario });
-  } catch (error) {
-    res
-      .status(400)
-      .render("login.handlebars", { status: "error", message: error.message });
-  }
-}
 export async function ventanaLogin(req, res) {
   try {
     res.status(200).render("login.handlebars", { status: "success" });

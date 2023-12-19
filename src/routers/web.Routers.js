@@ -5,7 +5,6 @@ import {
   usserRegister,
   saveAndSend,
   chatHandlebars,
-  conectUsser,
   mostrarProducto,
   mostrarProductosCarrito,
   ventanaRegister,
@@ -27,7 +26,6 @@ webRouter.get("/register", ventanaRegister);
 
 ////Muestra ventana de Login.handlebars
 webRouter.get("/login", ventanaLogin);
-webRouter.post("/login/conect", conectUsser);
 
 //Guarda el usuario y contraseña en la base de datos de mongose
 webRouter.post("/usserRegister", usserRegister);
