@@ -48,6 +48,7 @@ export async function homeWeb(req, res) {
       hasNextPage: productos.hasNextPage,
       hayDocs: productos.docs > 0,
       prevLink: productos.prevLink,
+      usser: req.session["usser"],
     });
   } catch (error) {
     return res.status(400).json({
@@ -98,7 +99,7 @@ export async function logginUsser(req, res) {
 export async function usserRegister(req, res) {
   try {
     await conectar();
-    // const newUsser = await usserSchema.create(req.body);
+    const newUsser = await ussersMongoose.create(req.body);
     await desconectar();
     return res.status(200).json(newUsser);
   } catch (error) {
@@ -159,10 +160,19 @@ export async function ventanaRegister(req, res) {
   }
 }
 
-export async function ventanaLogin(req, res) {
-  try {
-    res.status(200).render("login.handlebars", { status: "success" });
-  } catch (error) {
-    res.status(400).render("login.handlebars", { status: "error" });
+export async function mostrarLogin(req, res) {
+  res.status(200).render("login.handlebars", { statuss: "sucess" });
+}
+
+export async function verPerfil(req, res) {
+  if (req.session["usser"]) {
+    res.status(201).render("perfil.handlebars", {
+      status: "success",
+      payload: req.session["usser"],
+    });
+  } else {
+    res.status(201).render("perfil.handlebars", {
+      status: "error",
+    });
   }
 }

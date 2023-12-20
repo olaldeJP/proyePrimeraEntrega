@@ -13,13 +13,11 @@ formReg?.addEventListener("submit", async (event) => {
 
     if (response.status == 201) {
       const usuario = await response.json();
-      alert(JSON.stringify(usuario));
-    } else {
-      alert(response.message);
+      window.location.href = `/perfil`;
     }
-    formReg.reset();
+    alert(response.message);
   } catch (error) {
-    console.log(error.message);
+    alert(error.message);
   }
 });
 

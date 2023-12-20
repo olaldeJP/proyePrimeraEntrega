@@ -1,15 +1,22 @@
 
-{{#if usuario}}
+{{#if usser}}
 
 {{>navbarConectado}}
 
 {{else}}
 
 {{>navbarNoConectado}}
+
 {{/if}}
 
 
 <h2>Home HandleBars</h2>
+<h2>BIENVENIDO</h2>
+<h2>{{usser.first_name}} {{usser.last_name}}</h2>
+
+{{#if usser.isAdmin}}
+<p>Usuario Administrador</p>
+{{/if}}
 <h2>Lista de productos por HandleBars</h2>
 {{#if payload}}
 

@@ -9,13 +9,11 @@ formLogin.addEventListener("submit", async (event) => {
       // @ts-ignore
       body: new URLSearchParams(new FormData(formLogin)),
     });
-    const r = await response.json();
-    if (r.status === "success") {
-      console.log("aaaaaaa");
-      window.location = "/";
+    const res = await response.json();
+    if (res.status === "success") {
+      window.location.href = `/`;
     }
-    formLogin.reset();
   } catch (error) {
-    alert(error.message);
+    console.log(error.message);
   }
 });
