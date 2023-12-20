@@ -11,8 +11,8 @@ import {
   mostrarProductosCarrito,
   ventanaRegister,
   homeWeb,
-} from "../controllers/web.Constrollers.js";
-import { cookieCreate } from "../middlewares/cookies.Middlewares.js";
+} from "../../controllers/web.Constrollers.js";
+import { cookieCreate } from "../../middlewares/cookies.Middlewares.js";
 
 export const webRouter = new Router();
 

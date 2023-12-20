@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { upload } from "../middlewares/multer.Middlewares.js";
+import { upload } from "../../middlewares/multer.Middlewares.js";
 import {
   getProductsController,
   getProductsByIdController,
@@ -10,8 +10,8 @@ import {
   postAgregarProductMongoDBController,
   actualizarProductoIdMongoController,
   deleteProductMongoose,
-} from "../controllers/products.Controllers.js";
-import { validarCamposMiddleware } from "../middlewares/products.Middlewares.js";
+} from "../../controllers/products.Controllers.js";
+import { validarCamposMiddleware } from "../../middlewares/products.Middlewares.js";
 
 export const productsRouter = new Router();
 

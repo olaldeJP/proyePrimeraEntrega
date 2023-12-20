@@ -1,5 +1,5 @@
 
-{{#if usuario}}
+{{#if payload}}
 {{>navbarConectado}}
 
 {{else}}
@@ -7,14 +7,17 @@
 {{>navbarNoConectado}}
 {{/if}}
 
-
+{{#unless payload}}
 <section class="modal ">
-    <input type="email" class="inpDatos" name="email" id="inputEmail" placeholder="Ingrese Email">
-    <input type="password" class="inpDatos" id="inputPassword" placeholder="Ingrese Password">
-    <input type="button" class="butModal" value="LogIn" id="buttonLogin">
-    <input type="button" class="butModal" value="Register" id="buttonRegister">
-    <input type="button" class="butModal butModalC" value="CERRAR" id="inputCerrar">
-
+   <form action="" method="post" id="formulario">
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email">
+    <label for="constraseña">Contraseña</label>
+    <input type="password" name="" id="constraseña">
+    <input type="submit" value="Log In">
+</form>
+{{/unless}}
+<button id="buttonCerrar">Cerrar</button>
 </section>
 <section class="boxMessages">
     <div class="windowsMessages">

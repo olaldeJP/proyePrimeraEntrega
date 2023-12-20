@@ -1,8 +1,6 @@
-const cerrarButton = document.querySelector("#inputCerrar");
-const buttonLogin = document.querySelector("#buttonLogin");
-const inputMail = document.querySelector("#inputEmail");
-const inputPassw = document.querySelector("#inputPassword");
-const buttonRegist = document.querySelector("#buttonRegister");
+const cerrarButton = document.querySelector("#buttonCerrar");
+const form = document.querySelector("#formulario");
+const buttonLogin = document.querySelector("#buttonSubmit");
 const buttonMessage = document.querySelector("#buttonMessage");
 const mensajeI = document.querySelector("#inputMensaje");
 const windowsChat = document.querySelector(".windowsMessages");
@@ -16,57 +14,21 @@ cerrarButton.addEventListener("click", () => {
 });
 
 //Se envia el usuario y la contraseña a validar, si existe , cierra la venta y guarda el Email en la variable usuarios, sino tira una alerta
-buttonLogin.addEventListener("click", () => {
-  const eMail = inputMail.value;
-  const passWord = inputPassw.value;
-  inputPassw.value = "";
-  inputMail.value = "";
-
-  fetch(
-    `http://localhost:8080/logginUsser/?usser=${eMail}&password=${passWord}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  )
-    .then((res) => {
-      return res.json();
-    })
-    .then((usser) => {
-      try {
-        usuario = usser[0].usser;
-        document.querySelector(".modal").classList.add("hidden");
-      } catch (error) {
-        alert("Los datos son invalidos");
-      }
-    });
-});
-
-//El boton Registrar envia el Email y la constraseña a la peticion usserRegister y lo guarda en la base de datos
-buttonRegist.addEventListener("click", () => {
-  const eMail = inputMail.value;
-  const passWord = inputPassw.value;
-  inputPassw.value = "";
-  inputMail.value = "";
-  fetch(`http://localhost:8080/usserRegister`, {
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const response = await fetch(`http://localhost:8080/api/sessions/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ usser: `${eMail}`, password: `${passWord}` }),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((usser) => {
-      try {
-        alert("Registro Exitoso");
-      } catch (error) {
-        alert("Error al crear la cuenta");
-      }
-    });
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    // @ts-ignore
+    body: new URLSearchParams(new FormData(form)),
+  });
+  const res = await response.json();
+  console.log(response);
+  console.log(res);
+
+  if (res.status === "success") {
+    window.location.href = "/chatHandlebars";
+  }
 });
 
 //Evento para enviar el mensaje con el usuario a la peticion messagePost en webRouter

@@ -1,7 +1,7 @@
 import express from "express";
 import handlebars from "express-handlebars";
-import { webRouter } from "./routers/web.Routers.js";
-import { apiRouter } from "./routers/api.Routers.js";
+import { webRouter } from "./routers/web/web.Routers.js";
+import { apiRouter } from "./routers//api/api.Routers.js";
 import { Server } from "socket.io";
 import {
   onConnection,

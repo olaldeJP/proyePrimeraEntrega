@@ -29,7 +29,7 @@ export async function register(req, res) {
 
 export async function login(req, res) {
   try {
-    await conectar();
+    await conectar(req.body);
     const usserFind = await ussersMongoose.findOne(req.body).lean();
     await desconectar();
     if (!usserFind) {
