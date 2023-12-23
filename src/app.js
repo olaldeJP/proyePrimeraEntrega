@@ -11,7 +11,6 @@ import {
 import { PORT } from "./dao/services/config.js";
 import cookieParser from "cookie-parser";
 import session from "./middlewares/sesions.js";
-
 const app = express();
 
 //Motor de plantillas : Handlebars
@@ -24,8 +23,8 @@ app.use(express.urlencoded({ extended: true })); //Poder leer formularios
 app.use(express.static("./public")); //Indicar las carpetas donde estan las vistas y las imagenes guardadas
 app.use(express.static("./views"));
 app.use("/static", express.static("./static"));
-app.use(session("palabraSecreta"));
-
+app.use(session("palabraSecreta")); // agrega el middleware session para usar express -session
+app.use(cookieParser()); //para usar cookies luego de instalar npm install express cookie-parser
 //Se pone a escuchar en el puerto
 const server = app.listen(PORT, () => {
   //Se levanta el servidor y se pone a escuchar en el puerto PORT

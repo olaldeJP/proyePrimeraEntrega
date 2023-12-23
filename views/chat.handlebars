@@ -8,16 +8,16 @@
 {{/if}}
 
 {{#unless payload}}
-<section class="modal ">
+<section class="modal">
    <form action="" method="post" id="formulario">
     <label for="email">Email</label>
     <input type="text" name="email" id="email">
     <label for="constraseña">Contraseña</label>
     <input type="password" name="" id="constraseña">
-    <input type="submit" value="Log In">
+    <input class="butModal" type="submit" value="Log In">
+<button class="butModal butModalC" id="buttonCerrar">Cerrar</button>
 </form>
 {{/unless}}
-<button id="buttonCerrar">Cerrar</button>
 </section>
 <section class="boxMessages">
     <div class="windowsMessages">

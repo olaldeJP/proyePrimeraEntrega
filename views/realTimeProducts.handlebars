@@ -1,10 +1,12 @@
 
-{{#if usuario}}
+{{#if usser}}
+
 {{>navbarConectado}}
 
 {{else}}
 
 {{>navbarNoConectado}}
+
 {{/if}}
 
 <section class="sectionForms">
@@ -26,10 +28,10 @@
         <input id="stock" type="number" placeholder="Stock">
         <input type="file" id="inputImg" disabled >
         <select id="selectFormProducts" name="peticion">
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-        <option value="PUT">PUT</option>
-        <option value="DELETE">DELETE</option>
+        <option value="GET">VER / GET </option>
+        <option value="POST">AGREGAR / POST</option>
+        <option value="PUT">MODIFICAR / PUT</option>
+        <option value="DELETE">BORRAR / DELETE</option>
         </select>
         <input id="buttonFormProducts" type="submit" value="Enviar Peticion">
     </form>

@@ -62,10 +62,11 @@ a:hover{
   display: grid;
   justify-items: center;
   position: fixed;
+  align-items: center;
   top: 50px;
   left: 80px;
   width: 50%;
-  height: 50%;
+  height: 30%;
   background-color: #3498db;
   border: 8px solid black;
 }

@@ -1,13 +1,22 @@
-import { managerProducts } from "../dao/models/fs/productManager.js";
-import { MessagesManagerMongoose } from "../dao/models/db/messagesMongoose.js";
-import { cartsMongoose, conectar, desconectar } from "../dao/services/index.js";
-import { productsMongoose } from "../dao/services/index.js";
-import { ussersMongoose } from "../dao/services/index.js";
-import { emailAdmin } from "../dao/services/config.js";
+import { managerProducts } from "../../dao/models/fs/productManager.js";
+
+import {
+  cartsMongoose,
+  conectar,
+  desconectar,
+} from "../../dao/services/index.js";
+import {
+  productsMongoose,
+  ussersMongoose,
+  messageMongoose,
+} from "../../dao/services/index.js";
+
+import { emailAdmin } from "../../dao/services/config.js";
 
 export async function realTimeProductsWeb(req, res) {
   return res.status(200).render("realTimeProducts.handlebars", {
     titulo: " realTimeProductsWeb",
+    usser: req.session["usser"],
   });
 }
 //Muestra la pagina principal con los productos paginados
@@ -65,17 +74,15 @@ export async function homeWeb(req, res) {
 export async function chatHandlebars(req, res) {
   try {
     await conectar();
-    const mensajes = await MessagesManagerMongoose.find().lean(); //busca los chats y los convierte en objects con lean
+    const mensajes = await messageMongoose.find().lean(); //busca los chats y los convierte en objects con lean
     await desconectar();
     if (mensajes) {
       //si los encuentra , llama a la funcion del socket res["sendMessage"] para mostrar a todos los mensajes
       res["sendMessage"]();
-      return res
-        .status(200)
-        .render("chat.handlebars", {
-          status: "success",
-          payload: req.session["usser"],
-        });
+      return res.status(200).render("chat.handlebars", {
+        status: "success",
+        payload: req.session["usser"],
+      });
     } else {
       return res
         .status(400)
@@ -131,18 +138,6 @@ export async function usserRegister(req, res) {
   } catch (error) {
     await desconectar();
     return res.status(400).json({ status: "error", message: error.message });
-  }
-}
-
-export async function saveAndSend(req, res) {
-  try {
-    await conectar();
-    const mensaje = await MessagesManagerMongoose.create(req.body);
-    await desconectar();
-    res["sendMessage"]();
-    res.status(200);
-  } catch (error) {
-    res.status(400).json({ status: "error", message: error.message });
   }
 }
 

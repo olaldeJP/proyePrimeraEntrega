@@ -10,7 +10,7 @@ import {
   postAgregarProductMongoDBController,
   actualizarProductoIdMongoController,
   deleteProductMongoose,
-} from "../../controllers/products.Controllers.js";
+} from "../../controllers/ControllersApi/products.Controllers.js";
 import { validarCamposMiddleware } from "../../middlewares/products.Middlewares.js";
 
 export const productsRouter = new Router();

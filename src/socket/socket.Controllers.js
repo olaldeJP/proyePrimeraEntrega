@@ -5,7 +5,7 @@ import {
   conectar,
   productsMongoose,
 } from "../dao/services/index.js";
-import { MessagesManagerMongoose } from "../dao/models/db/messagesMongoose.js";
+import { messageMongoose } from "../dao/services/index.js";
 
 export function onConnection(socketServer) {
   return async function (socket) {
@@ -41,7 +41,7 @@ export function socketMessage(socketServer) {
       res["sendMessage"] = async () => {
         // Forma con FileSystem:  socketServer.emit("sendProducts", await managerProducts.getProducts());
         await conectar();
-        const messages = await MessagesManagerMongoose.find().lean();
+        const messages = await messageMongoose.find().lean();
         await desconectar();
         await socketServer.emit("sendMessage", messages);
       };

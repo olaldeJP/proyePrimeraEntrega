@@ -1,5 +1,6 @@
 const formLogout = document.querySelector("form");
 
+//Envia la peticion para borrar el res.session , y hace una redireccion a /login
 formLogout?.addEventListener("submit", async (event) => {
   event.preventDefault();
   try {

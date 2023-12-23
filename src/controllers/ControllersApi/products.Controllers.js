@@ -1,7 +1,8 @@
-import { managerProducts } from "../dao/models/fs/productManager.js";
-import { productsMongoose } from "../dao/services/index.js";
-import { conectar, desconectar } from "../dao/services/index.js";
-import { changeNameAndId } from "../middlewares/multer.Middlewares.js";
+import { managerProducts } from "../../dao/models/fs/productManager.js";
+import { productsMongoose } from "../../dao/services/index.js";
+import { conectar, desconectar } from "../../dao/services/index.js";
+import { changeNameAndId } from "../../middlewares/multer.Middlewares.js";
+
 // funciones GET constrollers de los productos
 
 //getProductsController Devuelve la lista de los productos almacenados en la base de datos, si existe un limite en req.query.limit, devolvera solo los promeros limits del arreglo
@@ -13,22 +14,25 @@ export async function getProductsController(req, res) {
 
     //FORMA CON MONGOOSE:
     await conectar();
-    const array2 = await productsMongoose.find().lean();
-    const limitar = await productsMongoose.aggregate[
+    const array = await productsMongoose.find().lean();
+    /* const limitar = await productsMongoose.aggregate[
       {
         $limit: { cantidad },
       }
     ];
-
+*/
     await desconectar();
     if (!cantidad) {
-      return res.status(200).json(limitar);
+      return res.status(200).json({ status: "success", products: array });
     } else {
-      return res.status(200).json(array2.slice(0, cantidad));
+      return res
+        .status(200)
+        .json({ statuss: "sucess", products: array.slice(0, cantidad) });
     }
+    throw new error("Error , PRODUCTO NO ENCONTRADO ");
   } catch (error) {
     return res.status(400).json({
-      status: "error en mostrar los productos",
+      status: "error",
       message: error.message,
     });
   }
@@ -42,7 +46,7 @@ export async function getProductsByIdController(req, res) {
     await conectar();
     const productID = await productsMongoose.findById(_id).lean();
     await desconectar();
-    return res.status(200).json(productID);
+    return res.status(200).json({ status: "success", products: productID });
   } catch (error) {
     await desconectar();
     return res.status(400).json({

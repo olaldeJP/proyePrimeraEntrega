@@ -22,7 +22,7 @@ selectForm.addEventListener("change", () => {
 
 /* Evento donde se envian una peticion al servidor , este lo recibe y lo actualiza con el socket a todos  */
 
-buttonProducts?.addEventListener("click", (event) => {
+buttonProducts?.addEventListener("click", async (event) => {
   event.preventDefault();
 
   socket.emit("peticionEnviada", () => {
@@ -32,7 +32,7 @@ buttonProducts?.addEventListener("click", (event) => {
   const idProduct = formProduct.idProduct.value;
   switch (formProduct.selectFormProducts.value) {
     case "POST":
-      fetch("http://localhost:8080/api/products", {
+      await fetch("http://localhost:8080/api/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ buttonProducts?.addEventListener("click", (event) => {
         body: JSON.stringify(JSONProductForm()),
       });
 
-      if (!formProduct.inputImg.files === 0) {
+      /* if (!formProduct.inputImg.files === 0) {
         const img = new FormData(formProduct.inputImg);
         fetch("http://localhost:8080/api/addImg", {
           method: "POST",
@@ -49,7 +49,7 @@ buttonProducts?.addEventListener("click", (event) => {
           },
           body: img,
         });
-      }
+      }*/
       break;
     case "GET":
       if (idProduct) {
@@ -57,16 +57,16 @@ buttonProducts?.addEventListener("click", (event) => {
           .then((res) => {
             return res.json();
           })
-          .then((products) => {
-            mostrarProductsEnPantalla(products);
+          .then((res) => {
+            mostrarProductsEnPantalla(res);
           });
       } else {
         fetch(`http://localhost:8080/api/products`)
           .then((res) => {
             return res.json();
           })
-          .then((products) => {
-            mostrarProductsEnPantalla(products);
+          .then((res) => {
+            mostrarProductsEnPantalla(res);
           });
       }
       break;
@@ -99,33 +99,33 @@ buttonProducts?.addEventListener("click", (event) => {
   });
 });
 
-function mostrarProductsEnPantalla(products) {
+function mostrarProductsEnPantalla(res) {
   divELements.innerHTML = "";
 
-  if (!(products["status"] == "error")) {
-    if (Array.isArray(products)) {
-      for (let index = 0; index < products.length; index++) {
+  if (!(res.status == "error")) {
+    if (Array.isArray(res.products)) {
+      for (let index = 0; index < res.products.length; index++) {
         const nuevoElement = document.createElement("div");
         nuevoElement.classList.add("box");
         nuevoElement.innerHTML = `
-        <p>ID: ${products[index]._id}</p> 
-        <p>TITULO: ${products[index].title}</p>
-        <p>DESCRIPCION: ${products[index].description}</p>
-        <p>PRECIO: ${products[index].price}</p>
-        <p>STOCK: ${products[index].stock}</p> 
-        <p>CODIGO: ${products[index].code}</p>`;
+        <p>ID: ${res.products[index]._id}</p> 
+        <p>TITULO: ${res.products[index].title}</p>
+        <p>DESCRIPCION: ${res.products[index].description}</p>
+        <p>PRECIO: ${res.products[index].price}</p>
+        <p>STOCK: ${res.products[index].stock}</p> 
+        <p>CODIGO: ${res.products[index].code}</p>`;
         divELements.appendChild(nuevoElement);
       }
     } else {
       const nuevoElement = document.createElement("div");
       nuevoElement.classList.add("box");
       nuevoElement.innerHTML = `
-        <p>ID: ${products._id}</p> 
-        <p>TITULO: ${products.title}</p>
-        <p>DESCRIPCION: ${products.description}</p>
-        <p>PRECIO: ${products.price}</p>
-        <p>STOCK: ${products.stock}</p> 
-        <p>CODIGO: ${products.code}</p>`;
+        <p>ID: ${res.products._id}</p> 
+        <p>TITULO: ${res.products.title}</p>
+        <p>DESCRIPCION: ${res.products.description}</p>
+        <p>PRECIO: ${res.products.price}</p>
+        <p>STOCK: ${res.products.stock}</p> 
+        <p>CODIGO: ${res.products.code}</p>`;
       divELements.appendChild(nuevoElement);
     }
   } else {

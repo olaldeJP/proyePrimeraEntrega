@@ -1,7 +1,11 @@
-import { cartsManager } from "../dao/models/fs/cartsManager.js";
-import { managerProducts } from "../dao/models/fs/productManager.js";
-import { productsMongoose } from "../dao/services/index.js";
-import { cartsMongoose, conectar, desconectar } from "../dao/services/index.js";
+import { cartsManager } from "../../dao/models/fs/cartsManager.js";
+import { managerProducts } from "../../dao/models/fs/productManager.js";
+import { productsMongoose } from "../../dao/services/index.js";
+import {
+  cartsMongoose,
+  conectar,
+  desconectar,
+} from "../../dao/services/index.js";
 //Constrollers de los Carts que se agregaran al Carts Router
 
 //Crea un nuevo carrito vacio

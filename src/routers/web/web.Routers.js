@@ -3,7 +3,6 @@ import {
   realTimeProductsWeb,
   logginUsser,
   usserRegister,
-  saveAndSend,
   chatHandlebars,
   mostrarProducto,
   mostrarLogin,
@@ -11,7 +10,7 @@ import {
   mostrarProductosCarrito,
   ventanaRegister,
   homeWeb,
-} from "../../controllers/web.Constrollers.js";
+} from "../../controllers/ControllersWeb/web.Constrollers.js";
 import { cookieCreate } from "../../middlewares/cookies.Middlewares.js";
 
 export const webRouter = new Router();
@@ -34,14 +33,11 @@ webRouter.get("/perfil", verPerfil);
 //Guarda el usuario y contraseña en la base de datos de mongose
 webRouter.post("/usserRegister", usserRegister);
 
-//Guarda los mensajes en la base de datos y los envia con el socket, peticiones enviadas desde chatWindows.js para la actualizacion de mensajes
-webRouter.post("/messagePost", saveAndSend);
-
 //Chequea que el usser y el password enviados en el boddy esten en la base de datos de mongo
 webRouter.get("/logginUsser", logginUsser);
 
 //Muestra los productos con paginate con Handlebars
-//cookieCreate
+
 webRouter.get("/", homeWeb);
 
 //Muestra Productos con Paginate con HandleBars
